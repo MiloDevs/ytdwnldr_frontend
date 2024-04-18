@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
+import { GoogleAnalytics } from '@next/third-parties/google'
 import "./globals.css";
 
 const space_grotesk = Space_Grotesk({ weight: ["300", "400", "500", "600" , "700"], subsets: ["latin"]});
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
   openGraph: {
     title: "YTDwnldr",
-    description: "Download YouTube videos as MP4 & MP3 files.",
+    description: "Download YouTube videos as MP4 & MP3 files quickly and conveniently with YTDwnldr.",
     url: "https://ytdwnldr.vercel.app",
     type: "website",
     locale: "en_US",
@@ -44,7 +45,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={space_grotesk.className}>{children}</body>
+      <body className={space_grotesk.className}>
+        {children}
+        <GoogleAnalytics gaId="G-D6QKTHFC99" />
+      </body>
     </html>
   );
 }
