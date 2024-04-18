@@ -117,7 +117,7 @@ export default class Home extends Component<{}, State> {
 
   render() {
     return (
-      <main className="flex flex-col min-h-screen p-4 bg-dot-white/[0.2] relative">
+      <main className="flex flex-col min-h-screen p-4 bg-dot-white/[0.2] dark:bg-dot-white/[0.2] relative">
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
         <nav className="flex w-full items-center z-10 justify-center">
           <div className="flex items-center space-x-3">
