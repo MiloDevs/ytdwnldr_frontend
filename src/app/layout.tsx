@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "YTDwnldr",
   description: "Download YouTube videos as MP4 & MP3 files.",
   keywords: ["youtube", "download", "mp4", "mp3"],
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  ),
   manifest: "/site.webmanifest",
   openGraph: {
     title: "YTDwnldr",
@@ -22,6 +25,16 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    site: "@YTDwnldr",
+    creator: "@milodevs",
+    images: [
+      {
+        url: "/logo.png",
+        alt: "YTDwnldr",
+      }
+    ]
+  }
 };
 
 export default function RootLayout({
