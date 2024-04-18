@@ -129,7 +129,7 @@ export default class Home extends Component<{}, State> {
         </nav>
         <section className="flex flex-col items-center justify-center flex-1">
           <div className="flex flex-col items-center justify-center">
-            <h2 className="md:text-3xl font-bold text-white mt-4 max-w-lg text-center">
+            <h2 className="md:text-3xl max-w-full md:max-w-lg z-20 font-bold text-white mt-4 text-center">
               No ads, no tracking, no BS. Just YouTube videos in MP4 & MP3
               format.
             </h2>
