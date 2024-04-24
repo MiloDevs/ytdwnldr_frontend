@@ -43,9 +43,10 @@ export default class Home extends Component<{}, State> {
       this.setState({ progress: data });
     });
 
-    socket.on("downloadCompletedServer", (data) => {
-      console.log(data[0]);
-      this.setState({ remainder: data[0] });
+    socket.on("downloadCompletedClient", (data) => {
+      console.log(data);
+      this.setState({ remainder: data });
+      this.setState({ isDownloading: false });
     });
 
     socket.on("audioDetails", (data) => {
@@ -98,15 +99,12 @@ export default class Home extends Component<{}, State> {
         .then((response) => {
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement("a");
-          const fileName = `${this.state.videoName} - ${this.state.videoUploader}.mp3`;
           link.href = url;
-          link.setAttribute(
-            "download",
-            fileName || "audio.mp3"
-          );
+          link.setAttribute("download", this.state.videoName + ".mp3");
           document.body.appendChild(link);
           link.click();
           this.setState({ isDownloading: false });
+          link.remove();
         });
     } catch (err) {
       console.log(err);
