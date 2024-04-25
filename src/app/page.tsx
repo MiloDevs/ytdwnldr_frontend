@@ -100,8 +100,10 @@ export default class Home extends Component<{}, State> {
           }
         )
         .then((response) => {
-          // download the file as mp3
-          this.downloadFile(response.data, `${this.state.videoName}.mp3`);  
+          const blob = new Blob([response.data], {
+            type: response.headers["content-type"],
+          });
+          saveAs(blob, `${this.state.videoName}.mp3`);
         });
     } catch (err) {
       console.log(err);
@@ -109,10 +111,6 @@ export default class Home extends Component<{}, State> {
       this.setState({ tooltip: "An error occurred. Please try again." });
     }
   };
-
-  downloadFile = (blob: Blob, fileName: string) => {
-    saveAs(blob, fileName);
-  }
 
   render() {
     return (
