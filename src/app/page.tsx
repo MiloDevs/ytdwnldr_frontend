@@ -94,18 +94,20 @@ export default class Home extends Component<{}, State> {
             responseType: "blob",
             onDownloadProgress: (progressEvent) => {
               this.setState({ loaded: progressEvent.loaded.toString() });
+              if(this.state.progress === "100") {
+                this.downloadFile(
+                  new Blob([this.state.remainder], { type: "audio/mpeg" }),
+                  `${this.state.videoName}.mp3`
+                );
+                this.setState({ isDownloading: false });
+              }
             },
+
           }
         )
         .then((response) => {
           // download the file as mp3
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download", this.state.videoName + ".mp3");
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
+          
         });
     } catch (err) {
       console.log(err);
@@ -113,6 +115,15 @@ export default class Home extends Component<{}, State> {
       this.setState({ tooltip: "An error occurred. Please try again." });
     }
   };
+
+  downloadFile = (blob: Blob, fileName: string) => {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    a.remove();
+  }
 
   render() {
     return (
