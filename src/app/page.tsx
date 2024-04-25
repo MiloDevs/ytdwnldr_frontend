@@ -97,12 +97,14 @@ export default class Home extends Component<{}, State> {
           }
         )
         .then((response) => {
+          // download the file as mp3
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement("a");
           link.href = url;
-          link.setAttribute("download", this.state.videoName + ".mp3");
+          link.setAttribute("download", "audio.mp3");
           document.body.appendChild(link);
           link.click();
+          this.setState({ isDownloading: false });
           link.remove();
         });
     } catch (err) {
