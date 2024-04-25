@@ -3,6 +3,7 @@ import { LucideArrowDown } from "lucide-react";
 import axios from "axios";
 import openSocket from "socket.io-client";
 import React, { Component } from "react";
+import { create } from "domain";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/";
 const socket = openSocket(API_URL);
@@ -98,14 +99,20 @@ export default class Home extends Component<{}, State> {
         )
         .then((response) => {
           // download the file as mp3
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download", `${this.state.videoName}.mp3`);
-          document.body.appendChild(link);
-          link.click();
-          this.setState({ isDownloading: false });
-          link.remove();
+          const file = new File(
+            [new Blob([response.data])],
+            this.state.videoName,
+            {
+              type: "audio/mpeg",
+            }
+          );
+          const url = URL.createObjectURL(file);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = this.state.videoName;
+          a.click();
+          window.URL.revokeObjectURL(url);
+          
         });
     } catch (err) {
       console.log(err);
