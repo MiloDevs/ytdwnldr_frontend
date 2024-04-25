@@ -106,7 +106,6 @@ export default class Home extends Component<{}, State> {
           document.body.appendChild(link);
           link.click();
           link.remove();
-          
         });
     } catch (err) {
       console.log(err);
