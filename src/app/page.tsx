@@ -101,7 +101,7 @@ export default class Home extends Component<{}, State> {
         )
         .then((response) => {
           const blob = new Blob([response.data], {
-            type: response.headers["content-type"],
+            type: "audio/mpeg",
           });
           saveAs(blob, `${this.state.videoName}.mp3`);
         });
