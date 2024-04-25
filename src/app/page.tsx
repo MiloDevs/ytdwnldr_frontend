@@ -4,6 +4,7 @@ import axios from "axios";
 import openSocket from "socket.io-client";
 import React, { Component } from "react";
 import { create } from "domain";
+import { saveAs } from "file-saver";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/";
 const socket = openSocket(API_URL);
@@ -94,20 +95,13 @@ export default class Home extends Component<{}, State> {
             responseType: "blob",
             onDownloadProgress: (progressEvent) => {
               this.setState({ loaded: progressEvent.loaded.toString() });
-              if(this.state.progress === "100") {
-                this.downloadFile(
-                  new Blob([this.state.remainder], { type: "audio/mpeg" }),
-                  `${this.state.videoName}.mp3`
-                );
-                this.setState({ isDownloading: false });
-              }
             },
 
           }
         )
         .then((response) => {
           // download the file as mp3
-          
+          this.downloadFile(response.data, `${this.state.videoName}.mp3`);  
         });
     } catch (err) {
       console.log(err);
@@ -117,12 +111,7 @@ export default class Home extends Component<{}, State> {
   };
 
   downloadFile = (blob: Blob, fileName: string) => {
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = fileName;
-    a.click();
-    a.remove();
+    saveAs(blob, fileName);
   }
 
   render() {
@@ -184,6 +173,11 @@ export default class Home extends Component<{}, State> {
             </form>
           </div>
         </section>
+        <footer className="flex items-center justify-center w-full fixed bottom-2">
+          <p className="text-white text-sm">
+            Made with ❤️ by milodevs
+          </p>
+        </footer>
       </main>
     );
   }
