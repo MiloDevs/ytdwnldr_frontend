@@ -99,19 +99,13 @@ export default class Home extends Component<{}, State> {
         )
         .then((response) => {
           // download the file as mp3
-          const file = new File(
-            [new Blob([response.data])],
-            this.state.videoName,
-            {
-              type: "audio/mpeg",
-            }
-          );
-          const url = URL.createObjectURL(file);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = this.state.videoName;
-          a.click();
-          window.URL.revokeObjectURL(url);
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", this.state.videoName + ".mp3");
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
           
         });
     } catch (err) {
