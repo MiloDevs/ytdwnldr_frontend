@@ -23,7 +23,7 @@ interface State {
 export default class Home extends Component<{}, State> {
   constructor(props: any) {
     super(props);
-    
+
     this.state = {
       clientId: "",
       url: "",
@@ -86,7 +86,7 @@ export default class Home extends Component<{}, State> {
           `${API_URL}`,
           {
             url: this.state.url,
-            clientId: this.state.clientId, 
+            clientId: this.state.clientId,
           },
           {
             method: "POST",
@@ -101,7 +101,7 @@ export default class Home extends Component<{}, State> {
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement("a");
           link.href = url;
-          link.setAttribute("download", "audio.mp3");
+          link.setAttribute("download", `${this.state.videoName}.mp3`);
           document.body.appendChild(link);
           link.click();
           this.setState({ isDownloading: false });
