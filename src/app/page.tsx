@@ -48,7 +48,6 @@ export default class Home extends Component<{}, State> {
     socket.on("downloadCompletedClient", (data) => {
       console.log(data);
       this.setState({ remainder: data });
-      this.setState({ isDownloading: false });
     });
 
     socket.on("audioDetails", (data) => {
@@ -104,6 +103,7 @@ export default class Home extends Component<{}, State> {
             type: "audio/mpeg",
           });
           saveAs(blob, `${this.state.videoName}.mp3`);
+          this.setState({ isDownloading: false });
         });
     } catch (err) {
       console.log(err);
