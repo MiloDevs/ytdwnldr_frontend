@@ -103,7 +103,6 @@ export default class Home extends Component<{}, State> {
           link.setAttribute("download", this.state.videoName + ".mp3");
           document.body.appendChild(link);
           link.click();
-          this.setState({ isDownloading: false });
           link.remove();
         });
     } catch (err) {
